@@ -1,0 +1,60 @@
+{
+  "name": "markdownlint-pangu",
+  "version": "0.1.0",
+  "description": "CLI wrapper that combines markdownlint with safe pangu spacing for Markdown.",
+  "type": "module",
+  "bin": {
+    "markdownlint-pangu": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "check": "npm run build && npm run test",
+    "prepublishOnly": "npm run build && npm run test"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "markdownlint",
+    "pangu",
+    "markdown",
+    "cli",
+    "lint"
+  ],
+  "author": "Ins1nuatE",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ins1nuatE/markdownlint-pangu.git"
+  },
+  "homepage": "https://github.com/Ins1nuatE/markdownlint-pangu#readme",
+  "bugs": {
+    "url": "https://github.com/Ins1nuatE/markdownlint-pangu/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "commander": "^14.0.0",
+    "fast-glob": "^3.3.3",
+    "markdownlint": "^0.40.0",
+    "mdast-util-from-markdown": "^2.0.3",
+    "mdast-util-frontmatter": "^2.0.1",
+    "mdast-util-gfm": "^3.1.0",
+    "mdast-util-math": "^3.0.0",
+    "micromark-extension-frontmatter": "^2.0.0",
+    "micromark-extension-gfm": "^3.0.0",
+    "micromark-extension-math": "^3.1.0",
+    "pangu": "^7.2.1",
+    "unist-util-visit": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}
