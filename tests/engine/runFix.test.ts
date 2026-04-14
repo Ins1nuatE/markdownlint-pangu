@@ -28,9 +28,6 @@ describe("runFix", () => {
           enabled: true,
           ignorePatterns: [],
           ignoreBlocks: [],
-          reportLevel: "error",
-          fixMode: true,
-          safeRangePolicy: "conservative",
         },
         output: {
           format: "text",
@@ -105,9 +102,6 @@ describe("runFix", () => {
           enabled: true,
           ignorePatterns: [],
           ignoreBlocks: [],
-          reportLevel: "error",
-          fixMode: true,
-          safeRangePolicy: "conservative",
         },
         output: {
           format: "text",

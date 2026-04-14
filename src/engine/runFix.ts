@@ -5,6 +5,7 @@ import { runMarkdownlint } from "../lint/runMarkdownlint.js";
 import { applyRangePatches } from "../markdown/applyRangePatches.js";
 import { collectSafeRanges } from "../markdown/safeRanges.js";
 import { buildSpacingPatches } from "../pangu/buildSpacingPatches.js";
+import { filterIgnoredRanges } from "../pangu/filterIgnoredRanges.js";
 import type { ResolvedOptions } from "../shared/types.js";
 
 interface RunFixInput {
@@ -20,7 +21,13 @@ interface RunFixResult {
 
 export async function runFix(input: RunFixInput): Promise<RunFixResult> {
   const spacingPatches = input.options.pangu.enabled
-    ? buildSpacingPatches(input.content, collectSafeRanges(input.content))
+    ? buildSpacingPatches(
+        input.content,
+        filterIgnoredRanges(input.content, collectSafeRanges(input.content), {
+          ignorePatterns: input.options.pangu.ignorePatterns,
+          ignoreBlocks: input.options.pangu.ignoreBlocks,
+        }),
+      )
     : [];
 
   const afterPangu = applyRangePatches(input.content, spacingPatches);

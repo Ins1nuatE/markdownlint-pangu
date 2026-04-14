@@ -19,7 +19,8 @@ describe("mergeOptions", () => {
         {
           pangu: {
             enabled: true,
-            reportLevel: "error",
+            ignorePatterns: ["README"],
+            ignoreBlocks: ["skip this block"],
           },
         },
         null,
@@ -41,8 +42,11 @@ describe("mergeOptions", () => {
 
     expect(merged.command).toBe("check");
     expect(merged.output.format).toBe("json");
-    expect(merged.pangu.enabled).toBe(false);
-    expect(merged.pangu.reportLevel).toBe("error");
+    expect(merged.pangu).toEqual({
+      enabled: false,
+      ignorePatterns: ["README"],
+      ignoreBlocks: ["skip this block"],
+    });
   });
 
   it("discovers default .markdownlint-pangu.json", async () => {

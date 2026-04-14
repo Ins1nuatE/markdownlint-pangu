@@ -81,7 +81,7 @@ async function runFixFromFiles(options: ResolvedOptions, patterns: string[]): Pr
       options,
     });
 
-    if (result.fixedContent !== content) {
+    if (result.recheckDiagnostics.length === 0 && result.fixedContent !== content) {
       await writeUtf8(filePath, result.fixedContent);
     }
 

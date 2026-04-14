@@ -4,6 +4,7 @@ import { normalizeMarkdownlintResults } from "../lint/normalizeMarkdownlintResul
 import { runMarkdownlint } from "../lint/runMarkdownlint.js";
 import { collectSafeRanges } from "../markdown/safeRanges.js";
 import { buildSpacingPatchesWithDiagnostics } from "../pangu/buildSpacingPatches.js";
+import { filterIgnoredRanges } from "../pangu/filterIgnoredRanges.js";
 import type { ResolvedOptions } from "../shared/types.js";
 
 interface RunCheckInput {
@@ -16,7 +17,10 @@ export async function runCheck(input: RunCheckInput): Promise<{ diagnostics: Dia
   const diagnostics: Diagnostic[] = [];
 
   if (input.options.pangu.enabled) {
-    const ranges = collectSafeRanges(input.content);
+    const ranges = filterIgnoredRanges(input.content, collectSafeRanges(input.content), {
+      ignorePatterns: input.options.pangu.ignorePatterns,
+      ignoreBlocks: input.options.pangu.ignoreBlocks,
+    });
     const patches = buildSpacingPatchesWithDiagnostics(input.content, ranges);
 
     for (const patch of patches) {

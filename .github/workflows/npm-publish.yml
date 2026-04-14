@@ -32,5 +32,26 @@ jobs:
       - name: Run tests
         run: npm run test
 
+      - name: Verify release tag matches package version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          node <<'EOF'
+          const { readFileSync } = require("node:fs");
+
+          const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
+          const releaseTag = process.env.RELEASE_TAG ?? "";
+          const normalizedTag = releaseTag.startsWith("v")
+            ? releaseTag.slice(1)
+            : releaseTag;
+
+          if (packageJson.version !== normalizedTag) {
+            console.error(
+              `Release tag ${releaseTag} does not match package.json version ${packageJson.version}.`,
+            );
+            process.exit(1);
+          }
+          EOF
+
       - name: Publish package
         run: npm publish

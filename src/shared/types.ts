@@ -20,9 +20,6 @@ export interface PanguConfig {
     enabled?: boolean;
     ignorePatterns?: string[];
     ignoreBlocks?: string[];
-    reportLevel?: Severity;
-    fixMode?: boolean;
-    safeRangePolicy?: "conservative";
   };
 }
 
@@ -39,9 +36,6 @@ export interface ResolvedOptions {
     enabled: boolean;
     ignorePatterns: string[];
     ignoreBlocks: string[];
-    reportLevel: Severity;
-    fixMode: boolean;
-    safeRangePolicy: "conservative";
   };
   output: {
     format: OutputFormat;

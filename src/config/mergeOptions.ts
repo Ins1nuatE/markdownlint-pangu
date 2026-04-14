@@ -24,9 +24,6 @@ export function mergeOptions(input: MergeOptionsInput): ResolvedOptions {
       enabled: input.cli.panguOff ? false : panguEnabledFromFile,
       ignorePatterns: input.panguConfig.pangu?.ignorePatterns ?? [],
       ignoreBlocks: input.panguConfig.pangu?.ignoreBlocks ?? [],
-      reportLevel: input.panguConfig.pangu?.reportLevel ?? "error",
-      fixMode: input.command === "fix",
-      safeRangePolicy: "conservative",
     },
     output: {
       format: input.cli.format ?? "text",

@@ -18,9 +18,6 @@ function createCheckOptions() {
       enabled: true,
       ignorePatterns: [],
       ignoreBlocks: [],
-      reportLevel: "error" as const,
-      fixMode: false,
-      safeRangePolicy: "conservative" as const,
     },
     output: {
       format: "text" as const,
@@ -83,5 +80,28 @@ describe("runCheck", () => {
       line: 2,
       column: 3,
     });
+  });
+
+  it("respects ignorePatterns and ignoreBlocks when checking pangu diagnostics", async () => {
+    const filePath = "tests/fixtures/markdown/check-input.md";
+    const content = await readFile(filePath, "utf8");
+    const result = await runCheck({
+      filePath,
+      content,
+      options: {
+        ...createCheckOptions(),
+        markdownlint: {
+          enabled: false,
+          config: {},
+        },
+        pangu: {
+          enabled: true,
+          ignorePatterns: ["MarkdownWorld"],
+          ignoreBlocks: ["README"],
+        },
+      },
+    });
+
+    expect(result.diagnostics).toEqual([]);
   });
 });

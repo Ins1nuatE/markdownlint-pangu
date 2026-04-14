@@ -166,8 +166,7 @@ markdownlint-pangu fix --help
   "pangu": {
     "enabled": true,
     "ignorePatterns": [],
-    "ignoreBlocks": [],
-    "reportLevel": "error"
+    "ignoreBlocks": []
   }
 }
 ```

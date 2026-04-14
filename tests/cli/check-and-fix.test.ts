@@ -157,4 +157,22 @@ describe("CLI check/fix", () => {
     expect(result.stdout).not.toContain("pangu/spacing");
     expect(result.stderr).toBe("");
   });
+
+  it("does not write partially fixed files when recheck still fails", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "markdownlint-pangu-cli-no-partial-"));
+    const filePath = join(cwd, "PARTIAL.md");
+    const original = "textREADME文本 \n";
+
+    await writeFile(filePath, original, "utf8");
+
+    const result = spawnSync(
+      "node",
+      ["dist/cli/index.js", "fix", "--pangu-off", filePath],
+      spawnOptions,
+    );
+
+    expect(result.status).toBe(1);
+    expect(result.stdout).toContain("MD041");
+    expect(await readFile(filePath, "utf8")).toBe(original);
+  });
 });
