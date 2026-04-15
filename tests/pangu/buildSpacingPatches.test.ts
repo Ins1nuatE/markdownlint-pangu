@@ -40,6 +40,17 @@ describe("buildSpacingPatches", () => {
       text: "這是一個 README 文件。",
     });
   });
+
+  it("keeps original slash spacing while preserving other pangu fixes", () => {
+    const markdown = "這是A/B測試";
+
+    const patches = buildSpacingPatches(markdown, collectSafeRanges(markdown));
+    const fixed = applyRangePatches(markdown, patches);
+
+    expect(fixed).toBe("這是 A/B 測試");
+    expect(patches).toHaveLength(1);
+    expect(patches[0]?.text).toBe("這是 A/B 測試");
+  });
 });
 
 describe("applyRangePatches", () => {
